@@ -50,34 +50,34 @@ var startApp = function () {
                     }
                 }
             ]).then(function (answer) {
-                console.log(answer.pickID);
-                "SELECT * FROM products WHERE id=?", [answer.pickID],
+                connection.query("SELECT * FROM products WHERE id=?", [answer.pickID],
                     function (err, res) {
-                        console.log(res)
+                        var useThis = res[0];
                         if (err) throw err;
-                        if (res.stock_quantity < answer.amount) {
+                        if (res[0].stock_quantity < answer.amount) {
                             console.log("There is not enough of this item in stock to complete your order.");
-                            // connection.end();
+                            connection.end();
                         }
                         else {
-                            "UPDATE products SET ? WHERE ?",
+                            connection.query("UPDATE products SET ? WHERE ?",
                                 [
                                     {
-                                        stock_quantity: res.stock_quanitity - answer.amount
+                                        stock_quantity: res[0].stock_quantity - answer.amount
                                     },
                                     {
                                         id: answer.pickID
                                     }
                                 ],
-                                function (err, res) {
+                                function (err) {
                                     if (err) throw err;
-                                    var total = res.price * answer.amount
+                                    var total = useThis.price * answer.amount
                                     console.log("Your order has been completed. Your purchase total is $" + total);
-                                    // connection.end();
+                                    connection.end();
                                 }
-                        }
+                            
+                            )};
 
-                    };
+                    });
             });
         });
 }
