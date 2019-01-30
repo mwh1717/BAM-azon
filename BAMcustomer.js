@@ -54,15 +54,15 @@ var startApp = function () {
                     function (err, res) {
                         var useThis = res[0];
                         if (err) throw err;
-                        if (res[0].stock_quantity < answer.amount) {
-                            console.log("There is not enough of this item in stock to complete your order.");
-                            connection.end();
+                        if (useThis.stock_quantity < answer.amount) {
+                            console.log("There is not enough of this item in stock to complete your order. We will restart the application for you.");
+                            startApp();
                         }
                         else {
                             connection.query("UPDATE products SET ? WHERE ?",
                                 [
                                     {
-                                        stock_quantity: res[0].stock_quantity - answer.amount
+                                        stock_quantity: useThis.stock_quantity - answer.amount
                                     },
                                     {
                                         id: answer.pickID
@@ -76,7 +76,6 @@ var startApp = function () {
                                 }
                             
                             )};
-
                     });
             });
         });
