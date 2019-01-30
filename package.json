@@ -1,0 +1,23 @@
+{
+  "name": "bam-azon",
+  "version": "1.0.0",
+  "description": "A faux online retail website that utilizes MySQL as well as node.js",
+  "main": "BAMcustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwh1717/BAM-azon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mwh1717/BAM-azon/issues"
+  },
+  "homepage": "https://github.com/mwh1717/BAM-azon#readme",
+  "dependencies": {
+    "inquirer": "^6.2.1",
+    "mysql": "^2.16.0"
+  }
+}
